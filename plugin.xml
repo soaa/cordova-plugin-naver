@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-naver"
+        version="0.0.1">
+
+    <name>Cordova Naver Plugin</name>
+
+    <description>
+        This is the unofficial cordova plugin for Naver Login (http://www.naver.com) .
+    </description>
+
+    <license>Apache 2.0</license>
+
+    <preference name="CLIENT_ID" />
+    <preference name="CLIENT_SECRET" />
+    <preference name="CLIENT_NAME" />
+
+    <engines>
+        <engine name="cordova-android" version=">=3.5.0" />
+        <engine name="cordova-ios" version=">=3.5.0" />
+    </engines>
+
+    <js-module src="www/NaverPlugin.js" name="NaverPlugin">
+        <clobbers target="NaverPlugin" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="NaverPlugin">
+                <param name="android-package" value="com.github.soaa.naver.NaverPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="android-minSdkVersion" value="15" />
+        </config-file>
+
+        <source-file src="src/android/naver_strings.xml" target-dir="res/values" />
+        <config-file target="res/values/naver_strings.xml" parent="/*">
+            <string name="naver_app_id">$CLIENT_ID</string>
+            <string name="naver_app_secret">$CLIENT_SECRET</string>
+            <string name="naver_app_name">$CLIENT_NAME</string>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="application">
+            <meta-data android:name="com.naver.sdk.clientId" android:value="@string/naver_app_id"/>
+            <meta-data android:name="com.naver.sdk.clientSecret" android:value="@string/naver_app_secret"/>
+            <meta-data android:name="com.naver.sdk.clientName" android:value="@string/naver_app_name" />
+            <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+                      android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            <activity android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+                      android:label="OAuth2.0 In-app"/>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+
+        <lib-file src="src/android/libs/3rdparty_login_library_android_4.1.4.jar"/>
+
+        <!-- cordova plugin src files -->
+        <source-file src="src/android/NaverPlugin.java" target-dir="src/com/github/soaa/naver" />
+
+    </platform>
+
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SpinnerDialog">
+                <param name="ios-package" value="NaverPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NAVER_CLIENT_ID">
+            <string>$CLIENT_ID</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NAVER_CLIENT_SECRET">
+            <string>$CLIENT_SECRET</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NAVER_CLIENT_NAME">
+            <string>$CLIENT_NAME</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NAVER_CALLBACK_SCHEME">
+            <string>naver$CLIENT_ID</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>naver$CLIENT_ID</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>naver$CLIENT_ID</string>
+            </array>
+        </config-file>
+        <source-file src="src/ios/NaverPlugin.swift" />
+        <source-file src="src/ios/NaverPlugin.h" />
+        <source-file src="src/ios/NaverPlugin-Bridging-Header.h" />
+        <source-file src="src/ios/NaverThirdPartyConstantsForApp.h" />
+        <source-file src="src/ios/NaverThirdPartyLoginConnection.h" />
+        <source-file src="src/ios/NLoginThirdPartyOAuth20InAppBrowserViewController.h" />
+        <source-file src="src/ios/NLoginThirdPartyOAuth20InAppBrowserViewController.m" />
+        <source-file src="src/ios/libNaverLogin.a" framework="true"/>
+        <resource-file src="src/ios/NaverAuth.bundle"/>
+
+        <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
+    </platform>
+</plugin>

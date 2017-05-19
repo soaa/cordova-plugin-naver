@@ -1,0 +1,23 @@
+{
+  "name": "cordova-plugin-naver",
+  "version": "0.0.1",
+  "description": "Cordova Naver Plugin",
+  "cordova": {
+    "id": "cordova-plugin-naver",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soaa/cordova-plugin-naver"
+  },
+  "keywords": [
+    "cordova",
+    "naver",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Sanghyeon Kim",
+  "license": "Apache-2.0"
+}
