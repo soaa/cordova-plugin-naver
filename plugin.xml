@@ -68,8 +68,9 @@
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="SpinnerDialog">
+            <feature name="NaverPlugin">
                 <param name="ios-package" value="NaverPlugin"/>
+                <param name="onload" value="true" />
             </feature>
         </config-file>
 
@@ -98,6 +99,8 @@
         <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
             <array>
                 <string>naver$CLIENT_ID</string>
+                <string>naversearchapp</string>
+                <string>naversearchthirdlogin</string>
             </array>
         </config-file>
         <source-file src="src/ios/NaverPlugin.swift" />
