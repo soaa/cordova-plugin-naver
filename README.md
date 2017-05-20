@@ -12,4 +12,4 @@ $ cordova plugin add cordova-plugin-naver --save \
 
 ## Note
 
-- 현재 안드로이드만 가능
+- iOS의 기본 scheme은 naver$CLIENT_ID 로 자동 등록된다
