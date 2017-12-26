@@ -113,6 +113,6 @@
         <source-file src="src/ios/libNaverLogin.a" framework="true"/>
         <resource-file src="src/ios/NaverAuth.bundle"/>
 
-        <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
+        <dependency id="cordova-plugin-add-swift-support" version="^1.7.1"/>
     </platform>
 </plugin>
