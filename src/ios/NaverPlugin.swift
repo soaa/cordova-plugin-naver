@@ -110,7 +110,7 @@ extension AppDelegate {
 
     open func nnSwizzledApplication(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) {
         self.handleNaverURL(url)
-        self.kkSwizzledApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        self.nnSwizzledApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     func handleNaverURL(_ url: URL) -> Bool {
