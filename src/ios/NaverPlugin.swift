@@ -106,13 +106,23 @@ extension AppDelegate {
             }
         }
         swizzle(AppDelegate.self, #selector(UIApplicationDelegate.application(_:open:sourceApplication:annotation:)), #selector(AppDelegate.nnSwizzledApplication(_:open:sourceApplication:annotation:)))
+        
+        if #available(iOS 9.0, *) {
+            swizzle(AppDelegate.self, #selector(UIApplicationDelegate.application(_:open:options:)), #selector(AppDelegate.nnSwizzledApplication_options(_:open:options:)))
+        }
     }()
 
     open func nnSwizzledApplication(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) {
         self.handleNaverURL(url)
         self.nnSwizzledApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
+    
+    open func nnSwizzledApplication_options(_ application: UIApplication, open url: URL, options: [String: Any]) {
+        self.handleNaverURL(url)
+        self.nnSwizzledApplication_options(application, open: url, options: options)
+    }
+    
+    
     func handleNaverURL(_ url: URL) -> Bool {
         let naverLogin:NaverThirdPartyLoginConnection = NaverThirdPartyLoginConnection.getSharedInstance()
         if (url.scheme == naverLogin.serviceUrlScheme) {
