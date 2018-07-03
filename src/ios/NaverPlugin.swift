@@ -42,10 +42,32 @@ import UIKit
         self.lastCommand = command
         naverLogin.requestThirdPartyLogin()
     }
+    
+    @objc(logout:) func logout(command: CDVInvokedUrlCommand) {
+        let naverLogin:NaverThirdPartyLoginConnection = NaverThirdPartyLoginConnection.getSharedInstance()
 
-    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
+        naverLogin.resetToken()
+        self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: command.callbackId)
+        
+        /*
+        objc_sync_enter(self)
+        
+        self.lastCommand = command
+        naverLogin.requestDeleteToken()
+        */
+    }
+
+    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection, didFailWithError error: Error) {
+        NSLog("did fail with error: %s", error.localizedDescription)
         self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription), callbackId: self.lastCommand?.callbackId)
 
+        objc_sync_exit(self)
+    }
+
+    func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFinishAuthorizationWithResult recieveType: THIRDPARTYLOGIN_RECEIVE_TYPE) {
+        NSLog("did fail with error: %d", recieveType.rawValue)
+        self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR), callbackId: self.lastCommand?.callbackId)
+        
         objc_sync_exit(self)
     }
 
@@ -117,8 +139,11 @@ extension AppDelegate {
         self.nnSwizzledApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
-    open func nnSwizzledApplication_options(_ application: UIApplication, open url: URL, options: [String: Any]) {
-        self.handleNaverURL(url)
+    open func nnSwizzledApplication_options(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any]) {
+        let naverLogin:NaverThirdPartyLoginConnection = NaverThirdPartyLoginConnection.getSharedInstance()
+        if (url.scheme == naverLogin.serviceUrlScheme) {
+            naverLogin.application(application, open: url, options: options)
+        }
         self.nnSwizzledApplication_options(application, open: url, options: options)
     }
     
@@ -133,3 +158,4 @@ extension AppDelegate {
         return false
     }
 }
+

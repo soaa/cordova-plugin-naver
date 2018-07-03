@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
 
-#import "NaverThirdPartyConstantsForApp.h"
-#import "NLoginThirdPartyOAuth20InAppBrowserViewController.h"
-#import "NaverThirdPartyLoginConnection.h"
+#import <NaverThirdPartyLogin/NaverThirdPartyConstantsForApp.h>
+#import <NaverThirdPartyLogin/NLoginThirdPartyOAuth20InAppBrowserViewController.h>
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 
 #import "AppDelegate.h"
 
