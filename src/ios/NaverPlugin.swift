@@ -142,7 +142,7 @@
         
         open func nnSwizzledApplication_options(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any]) {
             let naverLogin:NaverThirdPartyLoginConnection = NaverThirdPartyLoginConnection.getSharedInstance()
-            if (url.scheme?.caseInsensitiveCompare(naverLogin.serviceUrlScheme) == .orderedSame) {
+            if (naverLogin.serviceUrlScheme != nil && url.scheme?.caseInsensitiveCompare(naverLogin.serviceUrlScheme?) == .orderedSame) {
                 naverLogin.application(application, open: url, options: options)
             }
             self.nnSwizzledApplication_options(application, open: url, options: options)
