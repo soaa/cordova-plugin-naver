@@ -31,7 +31,6 @@
             naverLogin.appName = clientName
             naverLogin.delegate = self
 
-
         }
 
         @objc(login:) func login(command: CDVInvokedUrlCommand) {
@@ -142,8 +141,12 @@
         
         open func nnSwizzledApplication_options(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any]) {
             let naverLogin:NaverThirdPartyLoginConnection = NaverThirdPartyLoginConnection.getSharedInstance()
-            if (naverLogin.serviceUrlScheme != nil && url.scheme?.caseInsensitiveCompare(naverLogin.serviceUrlScheme?) == .orderedSame) {
-                naverLogin.application(application, open: url, options: options)
+            if (naverLogin.serviceUrlScheme != nil && url.scheme?.caseInsensitiveCompare(naverLogin.serviceUrlScheme) == .orderedSame) {
+                let result = naverLogin.receiveAccessToken(url)
+                
+                if result != SUCCESS {
+                    naverLogin.delegate?.oauth20Connection?(naverLogin, didFinishAuthorizationWithResult: result)
+                }
             }
             self.nnSwizzledApplication_options(application, open: url, options: options)
         }
