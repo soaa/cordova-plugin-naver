@@ -103,7 +103,7 @@
                 <string>naversearchthirdlogin</string>
             </array>
         </config-file>
-	<framework src="naveridlogin-sdk-ios" type="podspec" />
+	<framework src="naveridlogin-sdk-ios" type="podspec" spec="4.0.10" />
         <source-file src="src/ios/NaverPlugin.swift" />
         <source-file src="src/ios/NaverPlugin.h" />
         <source-file src="src/ios/NaverPlugin-Bridging-Header.h" />
